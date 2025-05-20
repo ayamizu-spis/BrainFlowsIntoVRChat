@@ -1,6 +1,3 @@
-# Trial-Feature Branch Memo
-OpenBCI Cytonや各測定法が動作するかの試験的な機能の実装
-
 # BFiVRC: BrainFlowsIntoVRChat
 
 This is a BrainFlow implementation of my [bci-workshop fork](https://github.com/ChilloutCharles/bci-workshop) that sends your brain's relaxation and focus metrics, and power values based on the common frequency bands used in EEG measuements, for left, right and both sides of the head. Logic to read actions off of your brainwaves using machine learning. Read the README.md in the `model/intent` directory for more information. Additional support for heart rate and respiration is available when supported by your hardware.
@@ -176,6 +173,9 @@ We recommend updating to this schema. However, if your assets are still using th
 
 ### OpenBCI
 - `python main.py --board-id CYTON_BOARD --serial-port <COM Port Name>`
+
+### Trial-Feature Branch Memo
+OpenBCI Cytonや各測定法が動作するかの試験的な機能の実装
 
 ## Thanks
 
