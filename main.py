@@ -12,6 +12,11 @@ from logic.neuro_feedback import NeuroFB
 from logic.biometrics import Biometrics
 from logic.addons import Addons
 
+# Add logic SSVEP/ERP/MI
+from logic.ssvep import SSVEP
+from logic.erp import ERP
+from logic.mi import MI
+
 from reporters.osc_reporter import OSC_Reporter
 from reporters.debug_osc_reporter import Debug_Reporter
 from reporters.deprecated_osc_reporter import Old_OSC_Reporter
@@ -51,6 +56,12 @@ def parse_args() -> argparse.Namespace:
     # board id by name or id
     parser.add_argument('--board-id', type=str, help='board id or name, check docs to get a list of supported boards',
                         required=True)
+
+    # 追加：モード選択
+    parser.add_argument('--mode',
+        choices=['normal','ssvep','erp','mi'],
+        default='normal',
+        help='動作モード。normal=通常動作、ssvep/erp/mi=各パラダイム単独で解析')
 
     # custom command line arguments
     parser.add_argument('--window-seconds', type=int,
@@ -130,16 +141,28 @@ def BoardInit(args: argparse.Namespace) -> tuple[BoardShim, list[BaseLogic], int
     ### Logic Modules ###
     has_muse_ppg = master_board_id in (BoardIds.MUSE_2_BOARD, BoardIds.MUSE_S_BOARD)
     
-    fft_size= 64 * 10 # TODO: Make this configurable
-    biometrics_logic = Biometrics(board, has_muse_ppg, fft_size=fft_size, ema_decay=ema_decay)
-
-    logics = [
-        Info(board, window_seconds=window_seconds),
-        PwrBands(board, window_seconds=window_seconds, ema_decay=ema_decay),
-        NeuroFB(board, window_seconds=window_seconds, ema_decay=ema_decay),
-        Addons(board, window_seconds=window_seconds, ema_decay=ema_decay),
-        biometrics_logic
-    ]
+    # 各モードごとに候補リストを作成
+    if args.mode == 'ssvep':
+        logics = [ SSVEP(board, window_seconds=args.window_seconds) ]
+    elif args.mode == 'erp':
+        logics = [ ERP(board) ]
+    elif args.mode == 'mi':
+        logics = [ MI(board) ]
+    else:  # normal
+        # 通常動作用のロジック群
+        fft_size = 64 * 10
+        biometrics_logic = Biometrics(board, has_muse_ppg, fft_size=fft_size, ema_decay=ema_decay)
+        logics = [
+            Info(board, window_seconds=window_seconds),
+            PwrBands(board, window_seconds=window_seconds, ema_decay=ema_decay),
+            NeuroFB(board, window_seconds=window_seconds, ema_decay=ema_decay),
+            Addons(board, window_seconds=window_seconds, ema_decay=ema_decay),
+            biometrics_logic
+        ]
+        # MLAction が有効なら追加
+        if args.enable_action:
+            from logic.ml_action import MLAction
+            logics.append(MLAction(board, ema_decay = ema_decay * args.action_ema_multiplier))
 
     ### Muse 2/S heartbeat support ###
     if has_muse_ppg:
