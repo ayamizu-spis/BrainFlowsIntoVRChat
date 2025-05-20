@@ -165,10 +165,14 @@ These Parameters read other biometric data from your device if supported by your
 We recommend updating to this schema. However, if your assets are still using the old parameter scheme, you can switch to them by adding the `--use-old-reporter` launch argument.
 
 ## Add: 実行コマンドの変更
-- python main.py --board-id MUSE_2_BOARD --mode normal
-- python main.py --board-id MUSE_2_BOARD --mode ssvep
-- python main.py --board-id MUSE_2_BOARD --mode erp
-- python main.py --board-id MUSE_2_BOARD --mode mi
+### Muse2
+- `python main.py --board-id MUSE_2_BOARD --mode normal`
+- `python main.py --board-id MUSE_2_BOARD --mode ssvep`
+- `python main.py --board-id MUSE_2_BOARD --mode erp`
+- `python main.py --board-id MUSE_2_BOARD --mode mi`
+
+### OpenBCI
+- `python main.py --board-id CYTON_BOARD --serial-port <COM Port Name>`
 
 ## Thanks
 
