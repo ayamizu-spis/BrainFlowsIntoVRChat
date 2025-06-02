@@ -1,34 +1,34 @@
 # BFiVRC: BrainFlowsIntoVRChat
 
-This is a BrainFlow implementation of my [bci-workshop fork](https://github.com/ChilloutCharles/bci-workshop) that sends your brain's relaxation and focus metrics, and power values based on the common frequency bands used in EEG measuements, for left, right and both sides of the head. Logic to read actions off of your brainwaves using machine learning. Read the README.md in the `model/intent` directory for more information. Additional support for heart rate and respiration is available when supported by your hardware.
+これは私の[bci-workshop fork](https://github.com/ChilloutCharles/bci-workshop)のBrainFlow実装で、あなたの脳のリラクゼーションと集中のメトリクス、そしてEEG測定で一般的に使用される周波数帯に基づいた左右両方の頭のパワー値を送信します。機械学習を使用して脳波からアクションを読み取るロジックです。詳細については、`model/intent`ディレクトリのREADME.mdをお読みください。ハードウェアが対応している場合は、心拍数と呼吸の追加サポートが利用可能です。
 
-## Why BrainFlow?
+## なぜBrainFlowなのか？
 
-The [BrainFlow](https://BrainFlow.org) library provides a uniform API that is device agnostic, allowing this implementation of my workshop fork to work for all [supported biosensors](https://BrainFlow.readthedocs.io/en/stable/SupportedBoards.html) (including the muse headbands). No extra software needed!
+[BrainFlow](https://BrainFlow.org)ライブラリは、デバイスに依存しない統一されたAPIを提供し、私のワークショップフォークのこの実装がすべての[サポートされているバイオセンサー](https://BrainFlow.readthedocs.io/en/stable/SupportedBoards.html)（Museヘッドバンドを含む）で動作することを可能にします。追加のソフトウェアは必要ありません！
 
-## Demos
+## デモ
 - [Rantis's Brain Controlled Ears](https://twitter.com/RantiMess/status/1746704510972580061)
 - [Brain Controlled Ears: Five Months Later [VRChat]](https://www.youtube.com/watch?v=kPPTT3ogEgg)
 - [VRCHAT OSC MAGIC! (Last 30 seconds)](https://twitter.com/kentrl_z/status/1497020472046800897)
 - [Old version of Brain Controlled Ears](https://www.youtube.com/watch?v=WjWc51xNgKg)
 
-## Instructions
+## 手順
 
-1. Download this project to a folder and remember its folder path
-2. Install [Python 3.11.5](https://www.python.org/downloads/release/python-3115/)
-3. Open the command prompt by typing searching cmd at the start menu
-4. Navigate to the project's path within the command prompt. 
-   - example: `cd "C:\Users\<YOUR USERNAME HERE>\Documents\GitHub\BrainFlowsIntoVRChat"` 
-5. Execute this command to install needed depedencies: `python -m pip install -r requirements.txt`
-6. Look up your device's name or board ID: [Board IDs Page](https://brainflow.readthedocs.io/en/stable/UserAPI.html?highlight=MUSE_2016_BOARD#brainflow-board-shim)
-7. Turn on your headband
-8. Run the script `main.py` with your device name or ID. For example, the command for running with a [Muse 2 headband](https://choosemuse.com/muse-2/) would be: `python .\main.py --board-id muse_2_board`
+1. このプロジェクトをフォルダにダウンロードし、そのフォルダパスを覚えておいてください
+2. [Python 3.11.5](https://www.python.org/downloads/release/python-3115/)をインストールします
+3. スタートメニューでcmdを検索してコマンドプロンプトを開きます
+4. コマンドプロンプト内でプロジェクトのパスに移動します。
+   - 例: `cd "C:\Users\<ここにユーザー名>\Documents\GitHub\BrainFlowsIntoVRChat"`
+5. 次のコマンドを実行して、必要な依存関係をインストールします: `python -m pip install -r requirements.txt`
+6. お使いのデバイスの名前またはボードIDを調べます: [Board IDs Page](https://brainflow.readthedocs.io/en/stable/UserAPI.html?highlight=MUSE_2016_BOARD#brainflow-board-shim)
+7. ヘッドバンドの電源を入れます
+8. デバイス名またはIDを指定してスクリプト`main.py`を実行します。たとえば、[Muse 2ヘッドバンド](https://choosemuse.com/muse-2/)で実行する場合のコマンドは次のようになります: `python .\main.py --board-id muse_2_board`
 
-## OSC Avatar Parameter Schema
+## OSCアバターパラメータスキーマ
 
-Here are the various avatar parameters sent to VRChat. Neurofeedback scores range from -1 to 1 for signed floats, 0 to 1 for unsigned, with higher and lower values corresponding to higher and lower relax/focus scores. Depending on the board you're using, heartrate, respiration and battery information might be available. Power Band numbers are also sent per location as well, ranging from 0 to 1 averaging at 0.2. 
+VRChatに送信されるさまざまなアバターパラメータを次に示します。ニューロフィードバックスコアの範囲は、符号付きfloatの場合は-1から1、符号なしの場合は0から1で、値が高いほどリラックス/フォーカススコアが高くなり、低いほど低くなります。使用しているボードによっては、心拍数、呼吸、バッテリー情報が利用できる場合があります。パワーバンド番号も場所ごとに送信され、0から1の範囲で平均0.2です。
 
-To use these parameters within VRChat, write the parameter name as a path. For example, to get the left side alpha value, the parameter name would be:
+これらのパラメータをVRChat内で使用するには、パラメータ名をパスとして記述します。たとえば、左側のアルファ値を取得する場合、パラメータ名は次のようになります。
 - `BFI/PwrBands/Left/Alpha`
 
 ```yaml
@@ -83,88 +83,88 @@ BFI:
     - BreathsPerMinute [int]
 ```
 
-## Migration from Old Parameter Schema
+## 古いパラメータスキーマからの移行
 
-Need to migrate your existing prefabs? Convert their parameter names using this wiki: [Migration of Old Parameters](https://github.com/ChilloutCharles/BrainFlowsIntoVRChat/wiki/Deprecation-of-Old-Parameters)
+既存のプレハブを移行する必要がありますか？このwikiを使用してパラメータ名を変換してください：[Migration of Old Parameters](https://github.com/ChilloutCharles/BrainFlowsIntoVRChat/wiki/Deprecation-of-Old-Parameters)
 
-## Parameter Descriptions
-### Utility
-These utility Parameters give basic information about your device and BFiVRC
-| Parameter | Description | Type |
+## パラメータの説明
+### ユーティリティ
+これらのユーティリティパラメータは、デバイスとBFiVRCに関する基本情報を提供します。
+| パラメータ | 説明 | タイプ |
 | ------ | ----- | ----- |
-| BFI/Info/VersionMajor | The major version number of current parameter schema | Int |
-| BFI/Info/VersionMinor | The minor version number of current parameter schema | Int |
-| BFI/Info/SecondsSinceLastUpdate | The refresh rate of BFiVRCs data stream | Float |
-| BFI/Info/DeviceConnected | The connection status of your device to BFiVRC | Bool |
-| BFI/Info/BatterySupported | If your device supports sending battery status to BFiVRC | Bool |
-| BFI/Info/BatteryLevel | The current charge status of your devices battery | Float |
+| BFI/Info/VersionMajor | 現在のパラメータスキーマのメジャーバージョン番号 | Int |
+| BFI/Info/VersionMinor | 現在のパラメータスキーマのマイナーバージョン番号 | Int |
+| BFI/Info/SecondsSinceLastUpdate | BFiVRCのデータストリームの更新レート | Float |
+| BFI/Info/DeviceConnected | デバイスのBFiVRCへの接続ステータス | Bool |
+| BFI/Info/BatterySupported | デバイスがBFiVRCへのバッテリーステータスの送信をサポートしているかどうか | Bool |
+| BFI/Info/BatteryLevel | デバイスのバッテリーの現在の充電ステータス | Float |
 
-### Neurofeedback
-These Parameters are calculated based on your current mental state and make use of the full signed positive and negative float range.
-| Parameter | Description | Type | Range |
+### ニューロフィードバック
+これらのパラメータは現在の精神状態に基づいて計算され、符号付きの正負両方のfloat範囲全体を利用します。
+| パラメータ | 説明 | タイプ | 範囲 |
 | ------ | ----- | ----- | ----- |
-| BFI/NeuroFB/FocusLeft | Left Unfocused to Focused | Float | [-1.0, 1.0] |
-| BFI/NeuroFB/FocusRight | Right Unfocused to Focused | Float | [-1.0, 1.0] |
-| BFI/NeuroFB/FocusAvg | Unfocused to Focused | Float | [-1.0, 1.0] |
-| BFI/NeuroFB/RelaxLeft | Left Excited to Relaxed | Float | [-1.0, 1.0] |
-| BFI/NeuroFB/RelaxRight | Right Excited to Relaxed | Float | [-1.0, 1.0] |
-| BFI/NeuroFB/RelaxAvg | Excited to Relaxed | Float | [-1.0, 1.0] |
+| BFI/NeuroFB/FocusLeft | 左 非集中から集中へ | Float | [-1.0, 1.0] |
+| BFI/NeuroFB/FocusRight | 右 非集中から集中へ | Float | [-1.0, 1.0] |
+| BFI/NeuroFB/FocusAvg | 非集中から集中へ | Float | [-1.0, 1.0] |
+| BFI/NeuroFB/RelaxLeft | 左 興奮からリラックスへ | Float | [-1.0, 1.0] |
+| BFI/NeuroFB/RelaxRight | 右 興奮からリラックスへ | Float | [-1.0, 1.0] |
+| BFI/NeuroFB/RelaxAvg | 興奮からリラックスへ | Float | [-1.0, 1.0] |
 
-These are the same Neurofeedback scores remapped to the positive 0 to 1 range for cases where it may be required.
-| Parameter | Description | Type | Range |
+これらは同じニューロフィードバックスコアで、必要に応じて正の0から1の範囲に再マッピングされます。
+| パラメータ | 説明 | タイプ | 範囲 |
 | ------ | ----- | ----- | ----- |
-| BFI/NeuroFB/FocusLeftPos | Left Unfocused to Focused | Float | [0.0, 1.0] |
-| BFI/NeuroFB/FocusRightPos | Right Unfocused to Focused | Float | [0.0, 1.0] |
-| BFI/NeuroFB/FocusAvgPos | Unfocused to Focused | Float | [0.0, 1.0] |
-| BFI/NeuroFB/RelaxLeftPos | Left Excited to Relaxed | Float | [0.0, 1.0] |
-| BFI/NeuroFB/RelaxRightPos | Right Excited to Relaxed | Float | [0.0, 1.0] |
-| BFI/NeuroFB/RelaxAvgPos | Excited to Relaxed | Float | [0.0, 1.0] |
+| BFI/NeuroFB/FocusLeftPos | 左 非集中から集中へ | Float | [0.0, 1.0] |
+| BFI/NeuroFB/FocusRightPos | 右 非集中から集中へ | Float | [0.0, 1.0] |
+| BFI/NeuroFB/FocusAvgPos | 非集中から集中へ | Float | [0.0, 1.0] |
+| BFI/NeuroFB/RelaxLeftPos | 左 興奮からリラックスへ | Float | [0.0, 1.0] |
+| BFI/NeuroFB/RelaxRightPos | 右 興奮からリラックスへ | Float | [0.0, 1.0] |
+| BFI/NeuroFB/RelaxAvgPos | 興奮からリラックスへ | Float | [0.0, 1.0] |
 
-### PowerBand
-These Parameters give the power value for the common frequency bands used in EEG measurements, measured per location. For more information on what each power band means, read more about it here: [What are Brainwaves](https://www.sciencedirect.com/topics/agricultural-and-biological-sciences/brain-waves)
-| Parameter | Description | Type | Range |
+### パワーバンド
+これらのパラメータは、EEG測定で使用される一般的な周波数帯のパワー値を場所ごとに示します。各パワーバンドの意味の詳細については、こちらをお読みください：[What are Brainwaves](https://www.sciencedirect.com/topics/agricultural-and-biological-sciences/brain-waves)
+| パラメータ | 説明 | タイプ | 範囲 |
 | ------ | ----- | ----- | ----- |
-| BFI/PwrBands/Left/Alpha | Left brainwaves Alpha band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Right/Alpha | Right brainwaves Alpha band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Avg/Alpha | Brainwaves Alpha band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Left/Beta | Left brainwaves Beta band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Right/Beta | Right brainwaves Beta band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Avg/Beta | Brainwaves Beta band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Left/Theta | Left brainwaves Theta band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Right/Theta | Right brainwaves Theta band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Avg/Theta | Brainwaves Theta band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Left/Delta | Left brainwaves Delta band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Right/Delta | Right brainwaves Delta band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Avg/Delta | Brainwaves Delta band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Left/Gamma | Left brainwaves Gamma band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Right/Gamma | Right brainwaves Gamma band | Float | [0.0, 1.0] |
-| BFI/PwrBands/Avg/Gamma | Brainwaves Gamma band | Float | [0.0, 1.0] |
+| BFI/PwrBands/Left/Alpha | 左脳波アルファ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Right/Alpha | 右脳波アルファ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Avg/Alpha | 脳波アルファ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Left/Beta | 左脳波ベータ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Right/Beta | 右脳波ベータ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Avg/Beta | 脳波ベータ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Left/Theta | 左脳波シータ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Right/Theta | 右脳波シータ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Avg/Theta | 脳波シータ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Left/Delta | 左脳波デルタ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Right/Delta | 右脳波デルタ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Avg/Delta | 脳波デルタ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Left/Gamma | 左脳波ガンマ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Right/Gamma | 右脳波ガンマ帯 | Float | [0.0, 1.0] |
+| BFI/PwrBands/Avg/Gamma | 脳波ガンマ帯 | Float | [0.0, 1.0] |
 
-### Addons
-These Parameters are additional functions of BFiVRC
-| Parameter | Description | Type | Range |
+### アドオン
+これらのパラメータはBFiVRCの追加機能です
+| パラメータ | 説明 | タイプ | 範囲 |
 | ------ | ----- | ----- | ----- |
-| BFI/Addons/HueShift | This Parameter uses combinations of relax/focus to drive a single float Parameter for material fx | Float | [0.0, 1.0] |
+| BFI/Addons/HueShift | このパラメータは、リラックス/フォーカスの組み合わせを使用して、マテリアルFX用の単一のfloatパラメータを駆動します | Float | [0.0, 1.0] |
 
-### Biometrics
-These Parameters read other biometric data from your device if supported by your hardware
-| Parameter | Description | Type | Range |
+### バイオメトリクス
+これらのパラメータは、ハードウェアでサポートされている場合、デバイスから他の生体データを読み取ります
+| パラメータ | 説明 | タイプ | 範囲 |
 | ------ | ----- | ----- | ----- |
-| BFI/Biometrics/Supported | If your hardware supports heart rate and respiration readouts | Bool | True/False |
-| BFI/Biometrics/HeartBeatsPerSecond | Your heartrate calculated per second | Float | [0.0, inf) |
-| BFI/Biometrics/HeartBeatsPerMinute | Your heartrate calculated per minute | Int | [0, 255] |
-| BFI/Biometrics/OxygenPercent | Percentage of oxygen in blood | Float | [0.0, 1.0] |
-| BFI/Biometrics/BreathsPerSecond | Estimated breaths taken per second  | Float | [0.0, inf) |
-| BFI/Biometrics/BreathsPerMinute | Estimated breaths taken per minute  | Int | [0, 255] |
+| BFI/Biometrics/Supported | ハードウェアが心拍数と呼吸数の読み取りをサポートしている場合 | Bool | True/False |
+| BFI/Biometrics/HeartBeatsPerSecond | 1秒あたりの心拍数 | Float | [0.0, inf) |
+| BFI/Biometrics/HeartBeatsPerMinute | 1分あたりの心拍数 | Int | [0, 255] |
+| BFI/Biometrics/OxygenPercent | 血中酸素飽和度 | Float | [0.0, 1.0] |
+| BFI/Biometrics/BreathsPerSecond | 1秒あたりの推定呼吸数 | Float | [0.0, inf) |
+| BFI/Biometrics/BreathsPerMinute | 1分あたりの推定呼吸数 | Int | [0, 255] |
 
-## Debugging and Logging
-- To make it easier to debug, add `--debug` launch argument. This will enable the console to display debug messages for all OSC messages sent as well as make the parameter names shorter so that they are readable on VRChat's OSC debug panel as well as any other OSC displays.
-- To record values per second, add `--enable-logs` launch argument. This will create timestamped logs under `logs` folder and can help visualize the values to assist with adjusting animations and the like.
+## デバッグとロギング
+- デバッグを容易にするために、`--debug`起動引数を追加します。これにより、送信されたすべてのOSCメッセージのデバッグメッセージがコンソールに表示され、VRChatのOSCデバッグパネルやその他のOSCディスプレイで読み取れるようにパラメータ名が短くなります。
+- 毎秒値を記録するには、`--enable-logs`起動引数を追加します。これにより、`logs`フォルダの下にタイムスタンプ付きのログが作成され、アニメーションなどの調整に役立つ値の視覚化に役立ちます。
 
-## Using Old Parameter Scheme
-We recommend updating to this schema. However, if your assets are still using the old parameter scheme, you can switch to them by adding the `--use-old-reporter` launch argument.
+## 古いパラメータスキームの使用
+このスキーマに更新することをお勧めします。ただし、アセットがまだ古いパラメータスキームを使用している場合は、`--use-old-reporter`起動引数を追加することでそれらに切り替えることができます。
 
-## Add: 実行コマンドの変更
+## 追加: 実行コマンドの変更
 ### Muse2
 - `python main.py --board-id MUSE_2_BOARD --mode normal`
 - `python main.py --board-id MUSE_2_BOARD --mode ssvep`
@@ -172,43 +172,44 @@ We recommend updating to this schema. However, if your assets are still using th
 - `python main.py --board-id MUSE_2_BOARD --mode mi`
 
 ### OpenBCI
-- `python main.py --board-id CYTON_BOARD --serial-port <COM Port Name>`
+- `python main.py --board-id CYTON_BOARD --serial-port <COMポート名>`
 
 ### Trial-Feature Branch Memo
 OpenBCI Cytonや各測定法が動作するかの試験的な機能の実装
 
-## Thanks
+## 謝辞
 
-Thanks to 
-- [@Mitzi_DelverVRC](https://twitter.com/Mitzi_DelverVRC) and [AartHark](https://github.com/AartHauk) for help with PPG signal work.
-- [@wordweaver1001](https://twitter.com/wordweaver1001) for intial user testing.
-- [AtriusX](https://github.com/AtriusX) for helping create a parameter schema.
-- [sync1211](https://github.com/sync1211) for enhancing the reconnect retry logic
-- [Hosomi](https://twitter.com/FakeHosomi), [Eni](https://github.com/eni-808), [AtriusX](https://github.com/AtriusX), [Rantis](https://github.com/RantiMess), [DeliciousSalad](https://github.com/DeliciousSalad) for development and testing of the action classification model and integration.
-- [Summer](https://x.com/TheGoodAI1) and Programmerboi for the development of the self-supervised model.
-- [Scapsters](https://github.com/Scapsters) for adding the ability to use multiple recorded sessions for train data gathering
+感謝します
+- PPG信号の作業を手伝ってくれた[@Mitzi_DelverVRC](https://twitter.com/Mitzi_DelverVRC)と[AartHark](https://github.com/AartHauk)
+- 初期のユーザーテストを行ってくれた[@wordweaver1001](https://twitter.com/wordweaver1001)
+- パラメータスキーマの作成を手伝ってくれた[AtriusX](https://github.com/AtriusX)
+- 再接続再試行ロジックを強化してくれた[sync1211](https://github.com/sync1211)
+- アクション分類モデルと統合の開発とテストを行ってくれた[Hosomi](https://twitter.com/FakeHosomi)、[Eni](https://github.com/eni-808)、[AtriusX](https://github.com/AtriusX)、[Rantis](https://github.com/RantiMess)、[DeliciousSalad](https://github.com/DeliciousSalad)
+- 自己教師ありモデルの開発を行ってくれた[Summer](https://x.com/TheGoodAI1)とProgrammerboi
+- 複数の記録されたセッションをトレーニングデータ収集に使用できるようにしてくれた[Scapsters](https://github.com/Scapsters)
 
-## Troubleshooting
-- I have broken Bluetooth adapter built into my pc and I would like to use a dongle instead. How can I connect my headband to that dongle?
-  1. Disconnect the Bluetooth dongle you want to use
-  2. Search up 'Device Manager' on the Start Menu
-  3. Find an entry for a Bluetooth radio, right click on it and disable it
-  4. Plug the new Bluetooth dongle back in
+## トラブルシューティング
+- PCに内蔵されているBluetoothアダプタが壊れていて、代わりにドングルを使用したいのですが、ヘッドバンドをそのドングルに接続するにはどうすればよいですか？
+  1. 使用したいBluetoothドングルを取り外します
+  2. スタートメニューで「デバイスマネージャー」を検索します
+  3. Bluetooth無線のエントリを見つけて右クリックし、無効にします
+  4. 新しいBluetoothドングルを再度接続します
 
-- Muse Headband connects just fine but times out after a few seconds. Solution: Reset the headband
-  1. Turn off the headband
-  2. Press and hold the power button until it turns on. Keep pressing until the light changes.
-  3. Reconnect.
+- Museヘッドバンドは正常に接続されますが、数秒後にタイムアウトします。解決策：ヘッドバンドをリセットします
+  1. ヘッドバンドの電源を切ります
+  2. 電源ボタンを長押しして電源を入れます。ライトが変わるまで押し続けます。
+  3. 再接続します。
 
-- I've set up everything and made a new avatar, but its still not reacting
-  - Reason: VRChat stores cached OSC parameters for your avatar that aren't updated when the avatar is updated with new parameters
-  - Solution: Go to `C:\Users\<YOUR USERNAME HERE>\AppData\LocalLow\VRChat\VRChat\OSC` and delete all folders under it, then reload avatar
+- すべてを設定し、新しいアバターを作成しましたが、まだ反応しません
+  - 理由：VRChatはアバターのキャッシュされたOSCパラメータを保存しており、アバターが新しいパラメータで更新されても更新されません
+  - 解決策：`C:\Users\<ここにユーザー名>\AppData\LocalLow\VRChat\VRChat\OSC`に移動し、その下のすべてのフォルダを削除してから、アバターをリロードします
 
-- If Python doesn't seem to be recognized, this is a Windows 10/11 issue
-  - Solution: For steps 5 and 8, replace `python` with `py`
+- Pythonが認識されないように見える場合、これはWindows 10/11の問題です
+  - 解決策：手順5と8で、`python`を`py`に置き換えます
 
-## Community
-Feel free to join our [community](https://discord.com/invite/W2R7zA84ay) to get additional help, hang out and discuss BCI tech, or to be informed of meetups in vrchat!
+## コミュニティ
+[コミュニティ](https://discord.com/invite/W2R7zA84ay)に自由に参加して、追加のヘルプを得たり、BCI技術について話し合ったり、VRChatでのミートアップについて情報を得たりしてください！
 
-## License
+## ライセンス
 [MIT](http://opensource.org/licenses/MIT).
+http://googleusercontent.com/youtube_content/0 http://googleusercontent.com/youtube_content/1
